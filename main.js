@@ -1,13 +1,11 @@
+require("dotenv").config();
+
 const API_URL = `https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos`;
 const HEADERS = {
   "content-type": "application/json",
-  apikey: "FcKdtJs202209",
+  apikey: process.env.API_KEY,
   username: "KDT3_RohJunYoung",
 };
-
-// require("dotenv").config();
-
-// console.log(process.env.API_KEY);
 
 const inputForm = document.querySelector(".todo-form");
 const submitBtn = document.querySelector(".submit-btn");
@@ -27,6 +25,18 @@ clearBtn.addEventListener("click", deleteTodoAll);
 
 renderTodoAll();
 
+// get List
+async function getTodoData() {
+  const res = await fetch(API_URL, {
+    method: "GET",
+    headers: HEADERS,
+  });
+  //   json은 응답데이터
+  const json = await res.json();
+  console.log(json);
+  return json;
+}
+
 // create List
 async function createTodo(content) {
   const res = await fetch(API_URL, {
@@ -41,10 +51,9 @@ async function createTodo(content) {
   console.log(json);
   renderEachItem(json);
 
-  // const editBtn = document.getElementById(`edit${json.id}`);
-  // editBtn.addEventListener("click", editGrocery);
+  const editBtn = document.getElementById(`edit${json.id}`);
+  editBtn.addEventListener("click", editTodo);
   const deleteBtn = document.getElementById(`delete${json.id}`);
-  console.log(deleteBtn);
   deleteBtn.addEventListener("click", deleteEachTodo);
 
   alertStatus.classList.add("alert-add");
@@ -75,18 +84,6 @@ function renderEachItem(json) {
   todoLists.append(todoSection);
 }
 
-// get List
-async function getTodoData() {
-  const res = await fetch(API_URL, {
-    method: "GET",
-    headers: HEADERS,
-  });
-  //   json은 응답데이터
-  const json = await res.json();
-  console.log(json);
-  return json;
-}
-
 // render List
 async function renderTodoAll() {
   todoLists.innerHTML = "";
@@ -97,19 +94,50 @@ async function renderTodoAll() {
   return json;
 }
 
+// 수정
+// 수정은 내용뿐만이아닌, 완료여부도 필요함
+async function editTodo() {
+  submitBtn.textContent = "Edit";
+  inputData.value = null;
+  const parentItem = document.getElementById(this.id.slice(4, this.id.length));
+  const editFunction = async (event) => {
+    event.preventDefault();
+    const res = await fetch(`${API_URL}/${parentItem.id}`, {
+      method: "PUT",
+      headers: HEADERS,
+      body: JSON.stringify({
+        title: inputData.value,
+        done: false,
+      }),
+    });
+    parentItem.childNodes[1].textContent = inputData.value;
+    submitBtn.textContent = "Submit";
+    inputData.value = null;
+    // eventlistner삭제
+    submitBtn.removeEventListener("click", editFunction);
+    alertStatus.classList.add("alert-edit");
+    alertStatus.textContent = "TODO 수정 완료";
+    setTimeout(() => {
+      alertStatus.classList.remove("alert-edit");
+      alertStatus.textContent = "";
+    }, 1000);
+  };
+  submitBtn.addEventListener("click", editFunction);
+}
+
 // 하나씩 삭제
 async function deleteEachTodo(todoId = "", all = true) {
+  // all은 전체삭제인지 판단하는것
   let parentItem = "";
   if (all) {
     parentItem = document.getElementById(this.id.slice(6, this.id.length));
     todoId = parentItem.id;
+    parentItem.remove();
   }
   const res = await fetch(`${API_URL}/${todoId}`, {
     method: "DELETE",
     headers: HEADERS,
   });
-  console.log(await res.json());
-  parentItem.remove();
   if (all) {
     alertStatus.classList.add("alert-clear");
     alertStatus.textContent = "TODO 삭제 완료";
@@ -120,15 +148,13 @@ async function deleteEachTodo(todoId = "", all = true) {
   }
 }
 
-// 전체 삭제 시급
+// 전체 삭제
 async function deleteTodoAll() {
   let json = await getTodoData();
-  // 이건 무조건 promiseall로 한번에 제거
   let promises = [];
   for (let todo of json) {
     promises.push(deleteEachTodo(todo.id, false));
   }
-  console.log("ZZ2");
   await Promise.all(promises);
   // promise.all을 해봤지만 시간은 여전히 오래걸림....
   // 꼼수로 html을 먼저 지우던가 해야하나?
