@@ -19,9 +19,13 @@
   "homepage": "https://github.com/ghgt1/KDT3-M3#readme",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.8.0",
-    "parcel": "^2.8.0"
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.8.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "sortablejs": "^1.15.0"
   }
 }

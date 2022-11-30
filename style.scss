@@ -12,6 +12,7 @@ main {
     margin: 0 auto;
     max-width: 750px;
     margin-top: 128px;
+    margin-bottom: 60px;
     .status-alert {
       display: flex;
       align-items: center;
@@ -29,11 +30,19 @@ main {
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      h3 {
-        font-size: 24px;
-        font-weight: bold;
-        letter-spacing: 4px;
-        margin-bottom: 24px;
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        h3 {
+          font-size: 24px;
+          font-weight: bold;
+          letter-spacing: 4px;
+          margin-bottom: 24px;
+        }
+        .select-container {
+          font-size: 12px;
+          line-height: 3;
+        }
       }
       .input-container {
         display: flex;
@@ -71,12 +80,26 @@ main {
       }
     }
     .todo-lists {
-      .todo {
+      .todos {
         display: flex;
         justify-content: space-between;
         margin: 0 0 8px;
         padding: 4px 16px;
+        cursor: move;
+        .left-container {
+          display: flex;
+          p {
+            text-decoration: none;
+            margin-left: 10px;
+            line-height: 1.4;
+          }
+        }
         .btn-container {
+          display: flex;
+          p {
+            line-height: 1.8;
+            font-size: 12px;
+          }
           .edit-btn {
             cursor: pointer;
             background: transparent;

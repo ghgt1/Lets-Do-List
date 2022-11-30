@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lets Do</title>
+    <title>Lets Do...</title>
     <!-- reset css -->
     <link
       rel="stylesheet"
@@ -18,6 +18,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="todo.png" />
+    <!-- style -->
     <link rel="stylesheet" href="style.scss" />
     <script type="module" defer src="main.js"></script>
   </head>
@@ -26,7 +29,23 @@
       <section class="center-window">
         <p class="status-alert"></p>
         <form class="todo-form">
-          <h3>Lets Do</h3>
+          <div class="header-container">
+            <h3>Lets Do...</h3>
+            <div class="select-container">
+              표시:
+              <select class="done-selector">
+                <option value="all">모두</option>
+                <option value="done">완료만</option>
+                <option value="yet">미완료만</option>
+              </select>
+              &nbsp 정렬:
+              <select class="sort-selector">
+                <option value="custom">사용자지정 순</option>
+                <option value="newest">최신 순</option>
+                <option value="oldest">오래된 순</option>
+              </select>
+            </div>
+          </div>
           <div class="input-container">
             <input
               type="text"
@@ -37,7 +56,7 @@
           </div>
         </form>
         <div class="todo-lists"></div>
-        <button class="clear-btn">Clear List</button>
+        <button class="clear-btn">완료된 할일 제거</button>
       </section>
     </main>
   </body>
