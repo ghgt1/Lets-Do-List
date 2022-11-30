@@ -19,7 +19,6 @@ const clearBtn = document.querySelector(".clear-btn");
 const alertStatus = document.querySelector(".status-alert");
 const doneSelector = document.querySelector(".done-selector");
 const sortSelector = document.querySelector(".sort-selector");
-// 나중에 request하는 header와 body까지도 함수화하면 좋을듯.
 
 renderTodo();
 
