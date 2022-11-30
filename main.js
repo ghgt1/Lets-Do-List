@@ -18,6 +18,30 @@ const alertStatus = document.querySelector(".status-alert");
 
 renderTodo();
 
+// api fetch Header, Body함수
+async function fetchAPI(method, endpoint, body = "") {
+  if (method === "GET") {
+    const res = await fetch(`${endpoint}`, {
+      method: method,
+      headers: HEADERS,
+    });
+    const json = await res.json();
+    return json;
+  }
+  if (!body) {
+    const res = await fetch(`${endpoint}`, {
+      method: method,
+      headers: HEADERS,
+    });
+  } else {
+    const res = await fetch(`${endpoint}`, {
+      method: method,
+      headers: HEADERS,
+      body: body,
+    });
+  }
+}
+
 //alert 제어 함수
 function alertHandler(addClass, content) {
   alertStatus.classList.add(addClass);
@@ -40,23 +64,16 @@ clearBtn.addEventListener("click", deleteTodoAll);
 
 // 전체 todo 받아오기
 async function getTodo() {
-  const res = await fetch(API_URL, {
-    method: "GET",
-    headers: HEADERS,
-  });
-  const json = await res.json();
+  const json = await fetchAPI("GET", API_URL);
   return json;
 }
 
 // todo 생성
 async function createTodo(content) {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: HEADERS,
-    body: JSON.stringify({
-      title: content,
-    }),
+  const body = JSON.stringify({
+    title: content,
   });
+  const res = await fetchAPI("POST", API_URL, body);
   alertHandler("alert-add", "TODO 추가 완료");
   // 여기서 이벤트생성이 아닌 render all 어차피 서버에 정보는 있다
   renderTodo();
@@ -123,7 +140,6 @@ function renderEachItem(todo) {
 // todo 전체 렌더링
 async function renderTodo() {
   let json = await getTodo();
-  // json = json.reverse();
   todoLists.innerHTML = "";
   json.forEach((todo) => {
     renderEachItem(todo);
@@ -137,17 +153,13 @@ async function editCheckbox(todoId, todoTitle, todoDone) {
   const checkEl = document.getElementById(todoId);
   const checked = checkEl.checked;
   const content = checkEl.nextElementSibling;
-  // 이게 다시 렌더링될때는 기억못하고 사라짐
   if (checked) content.style.textDecoration = "line-through";
   else content.style.textDecoration = "none";
-  const res = await fetch(`${API_URL}/${todoId}`, {
-    method: "PUT",
-    headers: HEADERS,
-    body: JSON.stringify({
-      title: todoTitle,
-      done: checked,
-    }),
+  const body = JSON.stringify({
+    title: todoTitle,
+    done: checked,
   });
+  await fetchAPI("PUT", `${API_URL}/${todoId}`, body);
 }
 
 //todo 내용 변경
@@ -155,17 +167,13 @@ async function editContent(todoId, todoTitle, todoDone) {
   submitBtn.textContent = "Edit";
   inputData.value = null;
   inputData.placeholder = "변경할 내용을 입력해주세요";
-
   const editFunction = async (event) => {
     event.preventDefault();
-    const res = await fetch(`${API_URL}/${todoId}`, {
-      method: "PUT",
-      headers: HEADERS,
-      body: JSON.stringify({
-        title: inputData.value,
-        done: todoDone,
-      }),
+    const body = JSON.stringify({
+      title: inputData.value,
+      done: todoDone,
     });
+    await fetchAPI("PUT", `${API_URL}/${todoId}`, body);
     submitBtn.textContent = "Submit";
     inputData.value = null;
     submitBtn.removeEventListener("click", editFunction);
@@ -177,11 +185,8 @@ async function editContent(todoId, todoTitle, todoDone) {
 }
 
 // todo 개별 삭제
-async function deleteEachTodo(todoId = "") {
-  const res = await fetch(`${API_URL}/${todoId}`, {
-    method: "DELETE",
-    headers: HEADERS,
-  });
+async function deleteEachTodo(todoId) {
+  await fetchAPI("DELETE", `${API_URL}/${todoId}`);
 }
 
 // todo 전체 삭제
