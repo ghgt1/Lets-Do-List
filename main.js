@@ -1,3 +1,6 @@
+// Sortable JS 라이브러리
+import Sortable from "sortablejs";
+
 // API KEY 환경변수 설정
 require("dotenv").config();
 
@@ -14,9 +17,18 @@ const inputData = document.querySelector(".todo-input");
 const todoLists = document.querySelector(".todo-lists");
 const clearBtn = document.querySelector(".clear-btn");
 const alertStatus = document.querySelector(".status-alert");
+const doneSelector = document.querySelector(".done-selector");
+const sortSelector = document.querySelector(".sort-selector");
 // 나중에 request하는 header와 body까지도 함수화하면 좋을듯.
 
 renderTodo();
+
+doneSelector.addEventListener("change", () => {
+  renderTodo(doneSelector.value, sortSelector.value);
+});
+sortSelector.addEventListener("change", () => {
+  renderTodo(doneSelector.value, sortSelector.value);
+});
 
 // api fetch Header, Body함수
 async function fetchAPI(method, endpoint, body = "") {
@@ -29,12 +41,12 @@ async function fetchAPI(method, endpoint, body = "") {
     return json;
   }
   if (!body) {
-    const res = await fetch(`${endpoint}`, {
+    await fetch(`${endpoint}`, {
       method: method,
       headers: HEADERS,
     });
   } else {
-    const res = await fetch(`${endpoint}`, {
+    await fetch(`${endpoint}`, {
       method: method,
       headers: HEADERS,
       body: body,
@@ -74,16 +86,16 @@ async function createTodo(content) {
     title: content,
   });
   const res = await fetchAPI("POST", API_URL, body);
-  alertHandler("alert-add", "TODO 추가 완료");
   // 여기서 이벤트생성이 아닌 render all 어차피 서버에 정보는 있다
-  renderTodo();
+  await renderTodo();
+  alertHandler("alert-add", "TODO 추가 완료");
 }
 
 // todo 하나 렌더링 과정
 function renderEachItem(todo) {
   const todoSection = document.createElement("div");
   todoSection.classList.add("todos");
-
+  todoSection.id = todo.id;
   // left Container생성
   const leftContainer = document.createElement("div");
   leftContainer.classList.add("left-container");
@@ -129,8 +141,8 @@ function renderEachItem(todo) {
   //이벤트리스너 즉시실행문제 해결
   deleteBtn.addEventListener("click", async () => {
     await deleteEachTodo(todo.id);
+    await renderTodo();
     alertHandler("alert-clear", "TODO 삭제 완료");
-    renderTodo();
   });
   btnSection.append(timeEl, editBtn, deleteBtn);
   todoSection.append(leftContainer, btnSection);
@@ -138,9 +150,19 @@ function renderEachItem(todo) {
 }
 
 // todo 전체 렌더링
-async function renderTodo() {
-  let json = await getTodo();
+async function renderTodo(done = "", sort = "") {
+  let json = Array.from(await getTodo());
   todoLists.innerHTML = "";
+  // 자 무조건 정렬의 default는 order임(사용자 지정)
+  // 따라서 최신순 오래된순은 reorder를 쓰지않고 내가 렌더링 상에서 해야할듯
+  // 아래의 if문에 안걸리면 그건 사용자지정임(order가 관리)
+  if (sort === "newest")
+    json.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  else if (sort === "oldest")
+    json.sort((a, b) => new Date(a.updatedAt) - new Date(b.updatedAt));
+
+  if (done === "done") json = json.filter((item) => item.done);
+  else if (done === "yet") json = json.filter((item) => !item.done);
   json.forEach((todo) => {
     renderEachItem(todo);
   });
@@ -150,7 +172,7 @@ async function renderTodo() {
 //찍긋기도 구현.
 //이건 전체 rendering안하고 방법은... dom으로 다루기?
 async function editCheckbox(todoId, todoTitle, todoDone) {
-  const checkEl = document.getElementById(todoId);
+  const checkEl = document.querySelector(`input#${todoId}`);
   const checked = checkEl.checked;
   const content = checkEl.nextElementSibling;
   if (checked) content.style.textDecoration = "line-through";
@@ -177,8 +199,8 @@ async function editContent(todoId, todoTitle, todoDone) {
     submitBtn.textContent = "Submit";
     inputData.value = null;
     submitBtn.removeEventListener("click", editFunction);
+    await renderTodo();
     alertHandler("alert-edit", "TODO 수정 완료");
-    renderTodo();
   };
 
   submitBtn.addEventListener("click", editFunction);
@@ -195,9 +217,27 @@ async function deleteTodoAll() {
   let promises = [];
   // 좀더연구
   json.forEach((todo) => {
-    promises.push(deleteEachTodo(todo.id));
+    if (todo.done) promises.push(deleteEachTodo(todo.id));
   });
   await Promise.all(promises);
-  alertHandler("alert-clear", "전체 삭제 완료");
-  renderTodo();
+  await renderTodo();
+  alertHandler("alert-clear", "삭제 완료");
 }
+
+// 커서로 순서바꾸기 기능
+// reorder를 사용해주면 order가 잘 부여가 됨
+new Sortable(todoLists, {
+  handle: ".todos",
+  animation: 200,
+  // 순서가바뀌면 컨텐트들도 재배치...
+  onEnd: async function reOrder(event) {
+    const tmpIds = [];
+    event.to.childNodes.forEach((node) => {
+      tmpIds.push(node.id);
+    });
+    const body = JSON.stringify({
+      todoIds: tmpIds,
+    });
+    await fetchAPI("PUT", `${API_URL}/reorder`, body);
+  },
+});
