@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lets Do...</title>
+    <!-- reset css -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css"
+    />
+    <!-- font cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+      integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="todo.png" />
+    <!-- style -->
+    <link rel="stylesheet" href="style.scss" />
+    <script type="module" defer src="./js/main.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="center-window">
+        <p class="status-alert"></p>
+        <div class="todo-form">
+          <div class="header-container">
+            <h3>Lets Do...</h3>
+            <div class="select-container">
+              표시:
+              <select class="done-selector">
+                <option value="all">모두</option>
+                <option value="done">완료만</option>
+                <option value="yet">미완료만</option>
+              </select>
+              &nbsp 정렬:
+              <select class="sort-selector">
+                <option value="custom">사용자지정 순</option>
+                <option value="newest">최신 순</option>
+                <option value="oldest">오래된 순</option>
+              </select>
+            </div>
+          </div>
+          <form class="input-container">
+            <input
+              type="text"
+              class="todo-input"
+              placeholder="할일을 적어보세요"
+            />
+            <button type="submit" class="submit-btn">Submit</button>
+          </form>
+        </div>
+        <div class="todo-lists"></div>
+        <button class="clear-btn">완료된 할일 제거</button>
+      </section>
+    </main>
+    <div class="loader loader-hidden">
+      <svg
+        viewBox="22.857142857142858 22.857142857142858 45.714285714285715 45.714285714285715"
+      >
+        <circle
+          cx="45.714285714285715"
+          cy="45.714285714285715"
+          r="20"
+          stroke-width="5.714285714285714"
+          stroke-dasharray="125.664"
+          stroke-dashoffset="125.66370614359172px"
+        ></circle>
+      </svg>
+    </div>
+  </body>
+</html>
