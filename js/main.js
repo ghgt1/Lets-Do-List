@@ -44,7 +44,7 @@ sortSelector.addEventListener("change", () => {
 });
 
 // todo추가 버튼
-inputForm.addEventListener("click", (event) => {
+inputForm.addEventListener("submit", (event) => {
   event.preventDefault();
   createTodo(inputData.value);
   inputData.value = null;
