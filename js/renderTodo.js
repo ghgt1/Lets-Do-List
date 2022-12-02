@@ -12,6 +12,7 @@ import { fetchAPI } from "./requests.js";
 // 전체 todo 받아오기
 export async function getTodo() {
   const json = await fetchAPI("GET", API_URL);
+  console.log(json);
   return json;
 }
 
@@ -26,7 +27,8 @@ export function renderEachItem(todo) {
   const checkEl = document.createElement("input");
   checkEl.type = "checkbox";
   checkEl.checked = todo.done;
-  checkEl.id = todo.id;
+  // 숫자로 id를 시작하면 안되는 오류....
+  checkEl.id = `check${todo.id}`;
   // checkEl 이벤트리스너 생성
   checkEl.addEventListener("click", () => {
     editCheckbox(todo.id, todo.title, todo.done);

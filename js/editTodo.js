@@ -7,13 +7,16 @@ import {
 } from "./main.js";
 import { renderTodo, alertHandler } from "./renderTodo.js";
 import { fetchAPI } from "./requests.js";
+
 //todo check 변경
 //찍긋기도 구현.
 //이건 전체 rendering안하고 방법은... dom으로 다루기?
 export async function editCheckbox(todoId, todoTitle, todoDone) {
-  const checkEl = document.querySelector(`input#${todoId}`);
+  console.log(todoId);
+  const checkEl = document.getElementById(`check${todoId}`);
   const checked = checkEl.checked;
   const content = checkEl.nextElementSibling;
+  console.log("ZZ");
   if (checked) content.style.textDecoration = "line-through";
   else content.style.textDecoration = "none";
   const body = JSON.stringify({
