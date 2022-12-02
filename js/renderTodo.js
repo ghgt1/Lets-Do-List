@@ -4,6 +4,7 @@ import {
   doneSelector,
   sortSelector,
   alertStatus,
+  clearBtn,
 } from "./main.js";
 import { deleteEachTodo } from "./deleteTodo.js";
 import { editContent, editCheckbox } from "./editTodo.js";
@@ -78,6 +79,8 @@ export function renderEachItem(todo) {
 // todo 전체 렌더링
 export async function renderTodo(done = "", sort = "") {
   let json = Array.from(await getTodo());
+  if (json.length === 0) clearBtn.classList.add("hidden");
+  else clearBtn.classList.remove("hidden");
   todoLists.innerHTML = "";
   // 자 무조건 정렬의 default는 order임(사용자 지정)
   // 따라서 최신순 오래된순은 reorder를 쓰지않고 내가 렌더링 상에서 해야할듯
@@ -89,8 +92,8 @@ export async function renderTodo(done = "", sort = "") {
 
   if (done === "done") json = json.filter((item) => item.done);
   else if (done === "yet") json = json.filter((item) => !item.done);
-  json.forEach(async (todo) => {
-    await renderEachItem(todo);
+  json.forEach((todo) => {
+    renderEachItem(todo);
   });
 }
 

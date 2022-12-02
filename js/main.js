@@ -24,7 +24,7 @@ export const doneSelector = document.querySelector(".done-selector");
 export const sortSelector = document.querySelector(".sort-selector");
 export const alertStatus = document.querySelector(".status-alert");
 export const loadEl = document.querySelector(".loader");
-const clearBtn = document.querySelector(".clear-btn");
+export const clearBtn = document.querySelector(".clear-btn");
 
 // 첫렌더링 로딩창을 위해 async처리함
 (async () => {
