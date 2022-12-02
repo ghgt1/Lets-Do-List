@@ -23,6 +23,7 @@ export const todoLists = document.querySelector(".todo-lists");
 export const doneSelector = document.querySelector(".done-selector");
 export const sortSelector = document.querySelector(".sort-selector");
 export const alertStatus = document.querySelector(".status-alert");
+export const loadEl = document.querySelector(".loader");
 const inputForm = document.querySelector(".todo-form");
 const clearBtn = document.querySelector(".clear-btn");
 
@@ -38,9 +39,9 @@ sortSelector.addEventListener("change", () => {
 });
 
 // todo추가 버튼
-inputForm.addEventListener("submit", (event) => {
+inputForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  createTodo(inputData.value);
+  await createTodo(inputData.value);
   inputData.value = null;
 });
 
