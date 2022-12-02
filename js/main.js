@@ -24,7 +24,6 @@ export const doneSelector = document.querySelector(".done-selector");
 export const sortSelector = document.querySelector(".sort-selector");
 export const alertStatus = document.querySelector(".status-alert");
 export const loadEl = document.querySelector(".loader");
-const inputForm = document.querySelector(".todo-form");
 const clearBtn = document.querySelector(".clear-btn");
 
 // 첫렌더링 로딩창을 위해 async처리함
@@ -45,9 +44,9 @@ sortSelector.addEventListener("change", () => {
 });
 
 // todo추가 버튼
-inputForm.addEventListener("submit", async (event) => {
+submitBtn.addEventListener("click", (event) => {
   event.preventDefault();
-  await createTodo(inputData.value);
+  createTodo(inputData.value);
   inputData.value = null;
 });
 

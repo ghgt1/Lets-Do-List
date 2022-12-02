@@ -12,7 +12,7 @@ import { fetchAPI } from "./requests.js";
 // 전체 todo 받아오기
 export async function getTodo() {
   const json = await fetchAPI("GET", API_URL);
-  console.log(json);
+  // console.log(json);
   return json;
 }
 
@@ -89,8 +89,8 @@ export async function renderTodo(done = "", sort = "") {
 
   if (done === "done") json = json.filter((item) => item.done);
   else if (done === "yet") json = json.filter((item) => !item.done);
-  json.forEach((todo) => {
-    renderEachItem(todo);
+  json.forEach(async (todo) => {
+    await renderEachItem(todo);
   });
 }
 
@@ -108,6 +108,3 @@ export function alertHandler(addClass, content) {
 // settimeout은 promise를 반환하지 않아서 반환하게 직접 생성.
 export const waitLoad = (timeToDelay) =>
   new Promise((resolve) => setTimeout(resolve, timeToDelay)); //이와 같이 선언 후
-// loadEl.classList.remove("loader-hidden");
-// await wait(500);
-// loadEl.classList.add("loader-hidden");

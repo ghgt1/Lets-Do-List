@@ -18,7 +18,7 @@ export async function deleteEachTodo(todoId, all = false) {
 export async function deleteTodoAll() {
   let json = await getTodo();
   let promises = [];
-  // 좀더연구
+  // 좀더연구if (todo.done)
   json.forEach((todo) => {
     if (todo.done) promises.push(deleteEachTodo(todo.id, true));
   });

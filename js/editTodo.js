@@ -30,6 +30,8 @@ export async function editContent(todoId, todoTitle, todoDone) {
   submitBtn.textContent = "Edit";
   inputData.value = null;
   inputData.placeholder = "변경할 내용을 입력해주세요";
+  inputData.focus();
+  // console.log(inputData);
   const editFunction = async (event) => {
     event.preventDefault();
     const body = JSON.stringify({
@@ -45,7 +47,7 @@ export async function editContent(todoId, todoTitle, todoDone) {
     await renderTodo(doneSelector.value, sortSelector.value);
     loadEl.classList.add("loader-hidden");
     alertHandler("alert-edit", "TODO 수정 완료");
+    inputData.placeholder = "할일을 적어보세요";
   };
-
   submitBtn.addEventListener("click", editFunction);
 }
