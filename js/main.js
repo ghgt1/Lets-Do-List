@@ -25,15 +25,14 @@ export const sortSelector = document.querySelector(".sort-selector");
 export const alertStatus = document.querySelector(".status-alert");
 export const loadEl = document.querySelector(".loader");
 export const clearBtn = document.querySelector(".clear-btn");
-export const inputForm = document.querySelector(".input-container")(
-  // 첫렌더링 로딩창을 위해 async처리함
-  async () => {
-    loadEl.classList.remove("loader-hidden");
-    await waitLoad(500);
-    await renderTodo(doneSelector.value, sortSelector.value);
-    loadEl.classList.add("loader-hidden");
-  }
-)();
+export const inputForm = document.querySelector(".input-container");
+// 첫렌더링 로딩창을 위해 async처리함
+(async () => {
+  loadEl.classList.remove("loader-hidden");
+  await waitLoad(500);
+  await renderTodo(doneSelector.value, sortSelector.value);
+  loadEl.classList.add("loader-hidden");
+})();
 
 // 버튼들 eventlistner설정
 // html select 표시방식과 정렬방식 감지
