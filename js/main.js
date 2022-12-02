@@ -4,7 +4,7 @@ import Sortable from "sortablejs";
 // 함수들 import
 import { createTodo } from "./createTodo.js";
 import { deleteTodoAll } from "./deleteTodo.js";
-import { renderTodo } from "./renderTodo.js";
+import { renderTodo, waitLoad } from "./renderTodo.js";
 import { fetchAPI } from "./requests.js";
 
 // API KEY 환경변수 설정
@@ -27,9 +27,15 @@ export const loadEl = document.querySelector(".loader");
 const inputForm = document.querySelector(".todo-form");
 const clearBtn = document.querySelector(".clear-btn");
 
-// 첫렌더링, 버튼들 이벤트리스너 생성
-renderTodo(doneSelector.value, sortSelector.value);
+// 첫렌더링 로딩창을 위해 async처리함
+(async () => {
+  loadEl.classList.remove("loader-hidden");
+  await waitLoad(500);
+  await renderTodo(doneSelector.value, sortSelector.value);
+  loadEl.classList.add("loader-hidden");
+})();
 
+// 버튼들 eventlistner설정
 // html select 표시방식과 정렬방식 감지
 doneSelector.addEventListener("change", () => {
   renderTodo(doneSelector.value, sortSelector.value);

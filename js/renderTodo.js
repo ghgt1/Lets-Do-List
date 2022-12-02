@@ -103,3 +103,11 @@ export function alertHandler(addClass, content) {
     alertStatus.textContent = "";
   }, 1000);
 }
+
+// 로딩 제어 함수
+// settimeout은 promise를 반환하지 않아서 반환하게 직접 생성.
+export const waitLoad = (timeToDelay) =>
+  new Promise((resolve) => setTimeout(resolve, timeToDelay)); //이와 같이 선언 후
+// loadEl.classList.remove("loader-hidden");
+// await wait(500);
+// loadEl.classList.add("loader-hidden");
