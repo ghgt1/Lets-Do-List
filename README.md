@@ -1,290 +1,83 @@
-# 📌 할 일 관리(Todo)
+# 📌 REST API 를 활용한 할 일 관리(Todo) 사이트📝
 
-주어진 API를 활용해 '[완성 예시](https://beautiful-daifuku-b9462c.netlify.app/)' 처럼 자유롭게 할 일 관리 프로젝트를 만들어보세요.
+패스트캠퍼스에서 진행한 REST API 를 활용한 할 일 관리 사이트입니다.
+버그 제보 받습니다!
 
-#### 과제 기간:
+## 배포주소
 
-- 수행 기간: 오늘 ~ 2022.12.07(수) 까지
-- 리뷰 기간: 
-  - 수강생끼리: 12.08(목) ~ 12.13(화)
-  - 리뷰어 1차: 12.08(목) ~ 12.13(화)
-  - 리뷰어 2차: 12.19(월) ~ 12.21(수)
-  
-#### 제출 방법:
+데모를 [여기서](https://todo-jyroh.netlify.app/) 보실수 있습니다 
 
-`main` 혹은 다른 사람의 브랜치로 절대 병합하지 않도록 주의하세요!    
-혹시 문제가 발생한 경우, 바로 강사에게 알려주세요!
+## 설치법
 
-1. 현재 깃헙 저장소를 클론!
-2. 확인 가능하도록 본명으로 브랜치 생성! `ParkYoungWoong`
-3. 과제 수행 후 원격 저장소로 푸시! `git push origin ParkYoungWoong`
-4. 현재 깃헙 저장소에서 `main` 브랜치로 Pull Request 생성하면 제출 완료!
-5. Pull Request 설명을 꼼꼼하게 작성!
+```shell
+$ git clone {주소복사}
+$ npm install
+$ npm init-y
+$ npm i -D parcel
+$ npm install sortablejs --save
+$ npm run dev
+```
 
-## 요구사항
+## 기간
 
-필수 요구사항은 꼭 달성해야 하는 목표로, 수정/삭제는 불가하고 추가는 가능합니다.    
-선택 요구사항은 단순 예시로, 자유롭게 추가/수정/삭제해서 구현해보세요.  
-각 요구사항은 달성 후 마크다운에서 `- [x]`로 표시하세요.
+- 2022/11/28 ~ 2022/12/02
+
+## 사용 기술 스택
+
+- Programming
+
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white"> <img src="https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=SASS&logoColor=white"> <img src="https://img.shields.io/badge/JAVASCRIPT-F7DF1E?style=for-the-badge&logo=JAVASCRIPT&logoColor=white"> 
+
+- Deploy
+
+<img src="https://img.shields.io/badge/NETLIFY-00C7B7?style=for-the-badge&logo=NETLIFY&logoColor=white">
+
+- Etc
+
+<img src="https://img.shields.io/badge/.ENV-ECD53F?style=for-the-badge&logo=.ENV&logoColor=white"> <img src="https://img.shields.io/badge/PARCEL-8DD6F9?style=for-the-badge&logoColor=white"> <img src="https://img.shields.io/badge/SORTABLE.JS-E2231A?style=for-the-badge&logo=Sauce Labs&logoColor=white">
+
+## 주요 구현 사항
+
+- TODO CRUD를 모두 구현하였습니다.
+- 드래그 앤 드롭을 SortableJS를 활용하여 구현하였습니다.
+- 완료/미완료, 시간순 보기 기능을 구현하였습니다.
+- 화면 상단에 상태 창을 구현하였습니다.
+- .env를 활용하여 API KEY를 숨겼습니다.
+- 할일 완료 체크시 가로줄을 그어 확실히 알 수 있개 하였습니다.
 
 ### :exclamation: 필수
 
-- [ ] 할 일 목록(List)이 출력돼야 합니다.
-- [ ] 할 일 항목(Item)을 새롭게 추가할 수 있어야 합니다.
-- [ ] 할 일 항목을 수정할 수 있어야 합니다.
-- [ ] 할 일 항목을 삭제할 수 있어야 합니다.
-- [ ] jQuery, React, Vue 등 JS 라이브러리와 프레임워크는 사용하지 않아야 합니다.
-- [ ] 실제 서비스로 배포하고 접근 가능한 링크를 추가해야 합니다.
+- [x] 할 일 목록(List)이 출력돼야 합니다.
+- [x] 할 일 항목(Item)을 새롭게 추가할 수 있어야 합니다.
+- [x] 할 일 항목을 수정할 수 있어야 합니다.
+- [x] 할 일 항목을 삭제할 수 있어야 합니다.
+- [x] jQuery, React, Vue 등 JS 라이브러리와 프레임워크는 사용하지 않아야 합니다.
+- [x] 실제 서비스로 배포하고 접근 가능한 링크를 추가해야 합니다.
 
 ### :grey_question: 선택
 
 - [ ] 가능하다면, 타입스크립트를 사용해보세요.
-- [ ] 할 일 항목의 순서를 바꿀 수 있도록 만들어보세요.
-- [ ] 할 일을 완료하지 않은 항목과 완료한 항목을 분류해서 출력해보세요.
-- [ ] 할 일을 완료한 항목을 한 번에 삭제할 수 있도록 만들어보세요.
-- [ ] 할 일 항목의 최신 수정일을 표시해보세요.
-- [ ] 할 일 목록이 출력되기 전에 로딩 애니메이션이 보이도록 만들어보세요.
-- [ ] 기타 동작이 완료되기 전에 로딩 애니메이션이 보이도록 만들어보세요.
-- [ ] 차별화가 가능하도록 프로젝트를 최대한 예쁘게 만들어보세요.
-- [ ] 할 일과 관련된 기타 기능도 고려해보세요.
+- [x] 할 일 항목의 순서를 바꿀 수 있도록 만들어보세요.
+- [x] 할 일을 완료하지 않은 항목과 완료한 항목을 분류해서 출력해보세요.
+- [x] 할 일을 완료한 항목을 한 번에 삭제할 수 있도록 만들어보세요.
+- [x] 할 일 항목의 최신 수정일을 표시해보세요.
+- [x] 할 일 목록이 출력되기 전에 로딩 애니메이션이 보이도록 만들어보세요.
+- [x] 기타 동작이 완료되기 전에 로딩 애니메이션이 보이도록 만들어보세요.
+- [x] 차별화가 가능하도록 프로젝트를 최대한 예쁘게 만들어보세요.
+- [x] 할 일과 관련된 기타 기능도 고려해보세요.
 
-## API 사용법
+## 어려웠던 부분 && 아쉬웠던 부분
 
-요청 주소(Endpoint)
+- eventListner가 여러번 중첩되는 문제가 있었고(remove로해결), 이벤트 버블링/캡처링도 처음 겪어봐서 매우 당황스러웠다.
+- setTimeout을 동기적으로 처리하고 싶었는데 Promise가 반환값이 아니라 구현이 힘들었다(직접 Promise로 변환).
+- 버튼들에 ID값들을 부여해놨었는데 querySelector가 숫자로 시작하는 ID값을 인지못하는 문제([출처](https://dev-son.tistory.com/24)) - ID앞에 문자를 넣어 해결
+- 두서없는 모듈화. 
+- `await`를 안걸어주어 비동기적으로 코드가 꼬이는경우가 많았다.
 
-```curl
-https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos
-```
+## 피드백 받고 싶은 부분
 
-모든 API 요청(Request) `headers`에 아래 정보가 꼭 포함돼야 합니다!  
-`username`은 `KDT3_ParkYoungWoong`와 같이 본명을 포함해야 합니다!  
-확인할 수 없는 사용자의 DB 정보는 임의로 삭제될 수 있습니다!  
-
-```json
-{
-  "content-type": "application/json",
-  "apikey": "FcKdtJs202209",
-  "username": "<YOUR_NAME>"
-}
-```
-
-API 사용 예시:
-
-```js
-async function createTodo() {
-  const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'apikey': 'FcKdtJs202209',
-      'username': 'KDT3_ParkYoungWoong'
-    },
-    body: JSON.stringify({
-      title: '아침 먹기!'
-    })
-  })
-  const json = await res.json()
-  console.log(json)
-
-  return json
-}
-```
-
-### 목록 조회
-
-전체 할 일 목록을 조회합니다.
-
-```curl
-curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos
-  \ -X 'GET'
-```
-
-요청 데이터 타입 및 예시:
-
-- 없음
-
-응답 데이터 타입 및 예시:
-
-```ts
-type ResponseValue = Todo[] // 할 일 목록
-
-interface Todo {
-  id: string // 할 일 ID
-  order: number // 할 일 순서
-  title: string // 할 일 제목
-  done: boolean // 할 일 완료 여부
-  createdAt: string // 할 일 생성일
-  updatedAt: string // 할 일 수정일
-}
-```
-
-```json
-[
-  {
-    "id": "mnIwaAPIAE1ayQmqekiR",
-    "order": 0,
-    "title": "JS 공부하기",
-    "done": false,
-    "createdAt": "2021-10-28T05:18:51.868Z",
-    "updatedAt": "2021-10-28T05:18:51.868Z"
-  },
-  {
-    "id": "tMzPImGoWtRdJ6yyVv2y",
-    "order": 1,
-    "title": "과제 PullRequest(PR) 생성",
-    "done": true,
-    "createdAt": "2021-10-28T04:16:53.980Z",
-    "updatedAt": "2021-10-28T09:40:17.955Z"
-  },
-  {
-    "id": "Rq8BebKihCgteHHhMIRS",
-    "order": 2,
-    "title": "API 스터디",
-    "done": false,
-    "createdAt": "2021-10-28T04:17:02.510Z",
-    "updatedAt": "2021-10-28T04:17:02.510Z"
-  }
-]
-```
-
-### 목록 순서 변경
-
-할 일 목록의 순서를 변경합니다.
-
-```curl
-curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/reorder
-  \ -X 'PUT'
-```
-
-요청 데이터 타입 및 예시:
-
-```ts
-interface RequestBody {
-  todoIds: string[] // 새롭게 정렬할 할 일 ID 목록 (필수!)
-}
-```
-
-```json
-{
-  "todoIds": [
-    "mnIwaAPIAE1ayQmqekiR",
-    "tMzPImGoWtRdJ6yyVv2y",
-    "GHrvr3LaPx1g7y2sNuaC",
-    "Rq8BebKihCgteHHhMIRS"
-  ]
-}
-```
-
-응답 데이터 타입 및 예시:
-
-```ts
-type ResponseValue = true // 순서 변경 여부
-```
-
-### 항목 추가
-
-할 일 항목을 새롭게 추가합니다.
-
-```curl
-curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos
-  \ -X 'POST'
-```
-
-요청 데이터 타입 및 예시:
-
-```ts
-interface RequestBody {
-  title: string // 할 일 제목 (필수!)
-  order?: number // 할 일 순서
-}
-```
-
-```json
-{
-  "title": "KDT 과정 설계 미팅",
-  "order": 2
-}
-```
-
-응답 데이터 타입 및 예시:
-
-```ts
-interface ResponseValue {
-  id: string
-  order: number
-  title: string
-  done: boolean
-  createdAt: string
-  updatedAt: string
-}
-```
-
-```json
-{
-  "id": "7P8dOM4voAv8a8cfoeKZ",
-  "order": 0,
-  "title": "KDT 과정 설계 미팅",
-  "done": false,
-  "createdAt": "2021-10-29T07:20:02.749Z",
-  "updatedAt": "2021-10-29T07:20:02.749Z"
-}
-```
-
-### 항목 수정
-
-특정 할 일 항목을 수정합니다.
-
-```curl
-curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/:todoId
-  \ -X 'PUT'
-```
-
-요청 데이터 타입 및 예시:
-
-```ts
-interface RequestBody {
-  title: string // 할 일 제목 (필수!)
-  done: boolean // 할 일 완료 여부 (필수!)
-  order?: number // 할 일 순서
-}
-```
-
-```json
-{
-  "title": "Bootstrap 스타일 추가",
-  "done": false,
-  "order": 2
-}
-```
-
-응답 데이터 타입 및 예시:
-
-```json
-{
-  "id": "7P8dOM4voAv8a8cfoeKZ",
-  "title": "Bootstrap 스타일 추가",
-  "done": false,
-  "order": 2,
-  "createdAt": "2021-10-29T07:20:02.749Z",
-  "updatedAt": "2021-10-29T07:20:02.749Z"
-}
-```
-
-### 항목 삭제
-
-특정 할 일 항목을 삭제합니다.
-
-```curl
-curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/todos/:todoId
-  \ -X 'DELETE'
-```
-
-요청 데이터 타입 및 예시:
-
-- 없음
-
-응답 데이터 타입 및 예시:
-
-```ts
-type ResponseValue = true
-```
+- 모듈화를 할때 `main.js`의 기능이 무엇이어야 할지 궁금합니다. 또한 모듈화를 적절히 했을까요?
+- 가끔 전체 할일 제거를 할때 console에 ERROR가 출력되는문제(동작엔 이상이 없습니다). 
+- API동작때의 에러를 처리해주고자 try-catch로 모두 감싸주었는데 (`requests.js` 참조) 이렇게 쓰는게 맞는지?
+- API에 전체 삭제 기능이 따로없어서 하나씩 삭제를 해주어야할 것 같은데 개수가 많을때 삭제 시간이 오래걸림. 따라서 `Promise.all`을 활용하면 시간을 줄일 수 있지 않을까 싶어서 사용했는데 맞게 사용한지를 모르겠습니다. (`deleteTodoAll()` 함수) 
+- 그 밖의 어떠한 피드백도 좋습니다!
